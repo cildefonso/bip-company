@@ -1,0 +1,84 @@
+
+#deploy:
+#  provider: script
+#  script: bash ./custom-deploy.sh
+#before_install:
+#- exec ./.database.yml
+#  - cp .env.travis .env
+#  - sudo mysql -e 'CREATE DATABASE testing;'
+
+#dist: xenial
+#sudo: false
+services:
+- mongodb
+
+before_script:
+ - sleep 15
+ - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+  
+#- mysql -u root -p
+
+#sudo: required
+#before_install:
+#  - mysql -u root -e 'CREATE DATABASE flyway;'
+#  - mysql -u root flyway < src/main/resources/db/migration/mysql/V1__tabela_empresa.sql
+#  - mysql -u root flyway < src/main/resources/db/migration/mysql/V2__init_empresa.sql
+#  - mysql -u root flyway < src/main/resources/db/migration/mysql/V3__table_company.sql
+#  - mysql -u root flyway < src/main/resources/db/migration/mysql/V4__init_company.sql
+#  - mysql -u root flyway < src/main/resources/db/migration/mysql/V5__table_user.sql
+
+script:
+- echo "skipping tests"
+
+#addons:
+#  apt:
+#    sources:
+#      - mysql-5.7-trusty
+#    packages:
+#      - mysql-server
+
+dist: trusty
+
+
+language: java
+sudo: true
+sudo: required
+jdk:
+- oraclejdk9
+addons:
+  apt:
+    packages:
+      - oracle-java9-installer
+before_install:
+  - chmod +x mvnw
+  
+addons:
+  sonarcloud:
+    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
+    token: 
+        secure: "d6188a6e016ac038ee6c03206b679be6535508b3"
+        
+       
+#script:
+  # other script steps might be done before running the actual analysis
+#   - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=myorg_myrepo
+  
+  
+#install: 
+#- true
+#- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+#- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+#script:
+#- mvn clean verify
+#- mvn install
+#- mvn test -B
+#- mvn clean install
+#- Teste
+#- mvn -U clean install
+#- bash build.sh || travis_terminate 40;
+#- bash deploy.sh || travis_terminate 40;
+ 
+notifications:
+  email:
+    - cildefonso@gmail.com, deleon.simoni@gmail.com
+ 
