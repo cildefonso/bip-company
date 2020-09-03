@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  bip-company-mongodb:
+    image: mongo:latest
+    container_name: "bip-company-mongodb"
+    ports:
+     - 27017:27017
+   # environment:
+   #   MONGO_INITDB_ROOT_USERNAME: root
+   #   MONGO_INITDB_ROOT_PASSWORD:
+    networks:
+     - bit-company
+  bip-company-springboot:
+    image: bip-company-springboot
+    container_name: "bip-company-springboot"
+    build: 
+     context: ./
+     dockerfile: Dockerfile   
+    ports:
+     - 8082:8080
+    links:
+     - bip-company-mongodb
+    networks:
+     - bit-company
+    depends_on:
+       - bip-company-mongodb
+     
+networks:
+  bit-company:

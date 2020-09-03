@@ -20,7 +20,7 @@ public class Usuario implements Serializable {
 	private String fullname;
 	private String email;
 	private String hashedPassword;
-	private PerfilEnum userTypeAccess;
+	private com.bip.api.enums.PerfilEnum userTypeAccess;
 
 	private Date dataAtualizacao;
 
@@ -71,12 +71,12 @@ public class Usuario implements Serializable {
 	}
 	
 	//@Enumerated(EnumType.STRING)
-	public PerfilEnum getUserTypeAccess() {
+	public com.bip.api.enums.PerfilEnum getUserTypeAccess() {
 		return userTypeAccess;
 	}
 
-	public void setUserTypeAccess(PerfilEnum userTypeAccess) {
-		this.userTypeAccess = userTypeAccess;
+	public void setUserTypeAccess(com.bip.api.enums.PerfilEnum roleUsuario) {
+		this.userTypeAccess = roleUsuario;
 	}
 
 	public void setHashedPassword(String hashedPassword) {

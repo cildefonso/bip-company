@@ -32,7 +32,7 @@ public class JwtUserFactory {
 	 * @param perfilEnum
 	 * @return List<GrantedAuthority>
 	 */
-	private static List<GrantedAuthority> mapToGrantedAuthorities(PerfilEnum perfilEnum) {
+	private static List<GrantedAuthority> mapToGrantedAuthorities(com.bip.api.enums.PerfilEnum perfilEnum) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(perfilEnum.toString()));
 		return authorities;
