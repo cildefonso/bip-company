@@ -12,9 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "companies")
 public class CompanyMongoDB implements Serializable {
 	
-	public static final long serialVersionUID = 4862991749577621407L;
 	
-
+	private static final long serialVersionUID = -4823329335813040815L;
 	@org.springframework.data.annotation.Id
 	private ObjectId _id;
 	private String fullnamecompany;

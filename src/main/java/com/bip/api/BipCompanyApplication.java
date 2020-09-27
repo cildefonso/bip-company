@@ -17,7 +17,7 @@ public class BipCompanyApplication {
 	//@Value("${paginacao.qtd_por_pagina}")
 	//private int intQtdPorPagina;
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	//private UsuarioRepository usuarioRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BipCompanyApplication.class, args);
