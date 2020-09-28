@@ -49,6 +49,7 @@ deploy:
   overwrite: true
   glob: "*.jar"
   
+  
  # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
   skip_cleanup: true
  # upload_dir: target
