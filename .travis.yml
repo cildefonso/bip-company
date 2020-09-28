@@ -42,7 +42,7 @@ deploy:
   access_key_id: "AKIAYMIW5JU4FQQKDOTD"
   secret_access_key: "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"
   bucket: "bipbinary"
-  local_dir: "/target/"
+  local_dir: "target"
   key: latest/bip-company-0.0.1-SNAPSHOT.jar
 #  bundle_type: jar
 #  application: bip-company-0.0.1-SNAPSHOT
