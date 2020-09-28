@@ -46,7 +46,8 @@ deploy:
   bundle_type: jar
   application: bip-company
   overwrite: true
-  upload_dir: target
+  glob: "*.jar"
+ # upload_dir: target
  # deployment_group: MyDeploymentGroup
  # region: us-east-1
  
