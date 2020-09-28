@@ -36,16 +36,17 @@ addons:
         secure: "d6188a6e016ac038ee6c03206b679be6535508b3"
         
        
-#deploy:
-#  provider: codedeploy
-#  access_key_id: "AKIAYMIW5JU4MZ5VH7CW"
-#  secret_access_key: "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"
-#  bucket: "bip"
-#  key: latest/MyApp.zip
-#  bundle_type: jar
-#  application: bip-company
-#  deployment_group: MyDeploymentGroup
-#  region: us-west-1
+deploy:
+  #provider: codedeploy
+  provider: s3
+  access_key_id: "AKIAYMIW5JU4FQQKDOTD"
+  secret_access_key: "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"
+  bucket: "bipbinary"
+ # key: latest/MyApp.zip
+  bundle_type: jar
+ # application: bip-company
+ # deployment_group: MyDeploymentGroup
+ # region: us-east-1
  
    
 notifications:
