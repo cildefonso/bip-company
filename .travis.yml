@@ -49,6 +49,7 @@ deploy:
   overwrite: true
   glob: "bip-company-0.0.1-SNAPSHOT.jar"
  # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
+ 
   skip_cleanup: true
  # upload_dir: target
  # deployment_group: MyDeploymentGroup
