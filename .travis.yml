@@ -44,8 +44,8 @@ deploy:
   bucket: "bipbinary"
   local_dir: "target"
   key: latest/bip-company-0.0.1-SNAPSHOT.jar
-#  bundle_type: jar
-#  application: bip-company-0.0.1-SNAPSHOT
+  bundle_type: jar
+  application: bip-company-0.0.1-SNAPSHOT
   overwrite: true
   glob: "bip-company-0.0.1-SNAPSHOT.jar"
   
