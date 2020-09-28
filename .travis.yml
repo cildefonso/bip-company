@@ -47,12 +47,12 @@ deploy:
 # bundle_type: jar
   application: bip-company-0.0.1-SNAPSHOT
   overwrite: true
+  skip_cleanup: true
 # glob: "bip-company-0.0.1-SNAPSHOT.jar"
 # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
-  skip_cleanup: true
- # upload_dir: target
- # deployment_group: MyDeploymentGroup
- # region: us-east-1
+# upload_dir: target
+# deployment_group: MyDeploymentGroup
+# region: us-east-1
  
    
 notifications:
