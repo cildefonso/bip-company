@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bip.api.domain.model.CompanyMongoDB;
-import com.bip.api.domain.repository.CompanyMongoDBRepository;
-import com.bip.api.domain.service.CompanyMongoDBService;
+import com.bip.api.domain.model.Company;
+import com.bip.api.domain.service.CompanyServiceImpl;
 import com.bip.api.domain.service.UfCacheService;
 /* Teste de stress e performace com Apache Ab
    ab -n 10000 -c 100 http://localhost:8080/api/companymongodb/
@@ -44,17 +43,15 @@ public class CompanyMongoDBController {
 	private UfCacheService ufCacheService;
 	
 	@Autowired
-	private CompanyMongoDBService companyMongoDBService;
-	
-	@Autowired
-	private CompanyMongoDBRepository companyMongoDBRepository;
+	private CompanyServiceImpl companyService;
+
 	
 	
 	@GetMapping(value = "/cnpj/{strCnpj}", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<CompanyMongoDB> findByCnpj(@PathVariable ("strCnpj") String strCnpj) {
+	public ResponseEntity<Company> findByCnpj(@PathVariable ("strCnpj") String strCnpj) {
 		System.out.println("--------------------------------");
-		CompanyMongoDB company = companyMongoDBRepository.findByCnpj(strCnpj);
+		Company company = companyService.findByCnpj(strCnpj);
 		System.out.println("Informações da empresa "+ company);
 		log.info("Informações da empresa "+ company);
 		
@@ -68,9 +65,9 @@ public class CompanyMongoDBController {
 	
 	@GetMapping(value = "/email/{strEmail}", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<CompanyMongoDB> findByEmail(@PathVariable ("strEmail") String strEmail) {
+	public ResponseEntity<Company> findByEmail(@PathVariable ("strEmail") String strEmail) {
 		System.out.println("--------------------------------");
-		CompanyMongoDB company = companyMongoDBRepository.findByEmail(strEmail);
+		Company company = companyService.findByEmail(strEmail);
 		System.out.println("Informações da empresa "+ company);
 		log.info("Informações da empresa "+ company);
 		
@@ -84,10 +81,10 @@ public class CompanyMongoDBController {
 	
 	@GetMapping(value = "/", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<List<CompanyMongoDB>> findByCnpj() {
+	public ResponseEntity<List<Company>> findByCnpj() {
 		System.out.println("--------------------------------");
 		
-		List<CompanyMongoDB> company = companyMongoDBRepository.findAll();
+		List<Company> company = companyService.findAll();
 		System.out.println("Informações da empresa "+ company);
 		log.info("Lista de todas as empresa "+ company);
 		
@@ -102,11 +99,11 @@ public class CompanyMongoDBController {
 	@PostMapping(value = "/", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<CompanyMongoDB> register(@Valid @RequestBody CompanyMongoDB company) {
+	public ResponseEntity<Company> register(@Valid @RequestBody Company company) {
 		if ((company == null )) {
 			return ResponseEntity.notFound().build();
 		}
-		CompanyMongoDB companyMongoDB = companyMongoDBService.insert(company);
+		Company companyMongoDB = companyService.insert(company);
 		
 		return ResponseEntity.ok(companyMongoDB);
 	}
@@ -114,13 +111,13 @@ public class CompanyMongoDBController {
 	@PutMapping(value = "/{strCnpj}", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<CompanyMongoDB> change(@Valid @PathVariable ("strCnpj") String strCnpj, @RequestBody CompanyMongoDB company){
+	public ResponseEntity<Company> change(@Valid @PathVariable ("strCnpj") String strCnpj, @RequestBody Company company){
 		
 		if ((company == null )) {
 			return ResponseEntity.notFound().build();
 		}
 		//companyMongoDB.setCnpj(strCnpj);
-		CompanyMongoDB companyMongoDB = companyMongoDBService.upDate(company);
+		Company companyMongoDB = companyService.upDate(company);
 		
 		
 		return ResponseEntity.ok(companyMongoDB);
@@ -129,30 +126,30 @@ public class CompanyMongoDBController {
 	@DeleteMapping(value = "/{strCnpj}", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
 	public ResponseEntity<Void> deletar(@PathVariable String strCnpj){
-		CompanyMongoDB company = companyMongoDBRepository.findByCnpj(strCnpj);
+		Company company = companyService.findByCnpj(strCnpj);
 		
 		if ((company == null)) {
 			return ResponseEntity.notFound().build();
 			
 		}
-		companyMongoDBService.deletar(company);
+		companyService.deletar(company);
 	
 		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping(value = "cnpj/v4/{strCnpj}", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
-	public ResponseEntity<CompanyMongoDB> buscarV1(@PathVariable ("strCnpj") String strCnpj) {
-		CompanyMongoDB companyMongoDB = new CompanyMongoDB();
+	public ResponseEntity<Company> buscarV1(@PathVariable ("strCnpj") String strCnpj) {
+		Company companyMongoDB = new Company();
 		//companyMongoDBRepository.deleteAll();
 		//companyMongoDBRepository.save(new CompanyMongoDB("Alice", 20));
 		//companyMongoDBRepository.save(new CompanyMongoDB("João", 30));
 		//companyMongoDBRepository.save(new CompanyMongoDB("Maria", 40));
-		companyMongoDBRepository.findAll().forEach(System.out::println);
+		companyService.findAll().forEach(System.out::println);
 		System.out.println();
 	
 		System.out.println("--------------------------------");
-		companyMongoDBRepository.findByNumberAddressBetween(18, 90).forEach(System.out::println);
+		companyService.findByNumberAddressBetween(18, 90).forEach(System.out::println);
 		System.out.println("--------------------------------");
 		
 		System.out.println("Executando serviço pela primeira vez: ");
