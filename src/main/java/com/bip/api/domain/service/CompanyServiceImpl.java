@@ -5,13 +5,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.bip.api.domain.model.Company;
 import com.bip.api.domain.repository.CompanyRepository;
 import com.bip.domain.exception.NegocioException;
 
-@Service
+
 public class CompanyServiceImpl implements  CompanyService{
 	private static final Logger log = LoggerFactory.getLogger(CompanyServiceImpl.class);
 	@Autowired
