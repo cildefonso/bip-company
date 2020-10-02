@@ -12,8 +12,8 @@ import com.bip.api.domain.repository.CompanyRepository;
 import com.bip.domain.exception.NegocioException;
 
 @Service
-public class CompanyServiceImpl implements CompanyService{
-	
+public class CompanyServiceImpl implements CompanyService {
+
 	private static final Logger log = LoggerFactory.getLogger(CompanyServiceImpl.class);
 	@Autowired
 	private CompanyRepository companyRepository;
