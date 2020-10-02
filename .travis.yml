@@ -53,9 +53,11 @@ deploy:
 # upload_dir: target
 # deployment_group: MyDeploymentGroup
 # region: us-east-1
+#https://medium.com/@itsdavidthai/comprehensive-aws-ec2-deployment-with-travisci-guide-7cafa9c754fc
  
    
 notifications:
   email:
-    - cildefonso@gmail.com, deleon.simoni@gmail.com
+    - cildefonso@gmail.com
+    #, deleon.simoni@gmail.com
  

@@ -2,12 +2,24 @@ package com.bip.api.domain.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import com.bip.api.domain.model.Company;
 
 
 
 public interface CompanyService {
 
+	/**
+	 * Retorna lista das empresas.
+	 * 
+	 * @param cnpj
+	 * @param pageRequest
+	 * @return Page<Company>
+	 */
+	Page<Company> findForCompanyCnpj(String cnpj, PageRequest pageRequest);
+	
 	/**
 	 * Retorna uma lista de empresas
 	 * @param company
