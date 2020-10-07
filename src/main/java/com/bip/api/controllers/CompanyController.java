@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +23,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bip.api.domain.model.Company;
-import com.bip.api.domain.service.CompanyServiceImpl;
+import com.bip.api.domain.service.CompanyService;
 import com.bip.api.domain.service.UfCacheService;
+import com.bip.api.dtos.CompanyDto;
+import com.bip.api.response.Response;
+
 /* Teste de stress e performace com Apache Ab
    ab -n 10000 -c 100 http://localhost:8080/api/companymongodb/
 */
 @RestController
 @EnableCaching
-@RequestMapping("/api/companymongodb")
-public class CompanyMongoDBController {
+@RequestMapping("/api/company")
+public class CompanyController {
 	
-	private static final Logger log = LoggerFactory.getLogger(CompanyMongoDBController.class);
+	private static final Logger log = LoggerFactory.getLogger(CompanyController.class);
 	
 	@Value("${paginacao.qtd_por_pagina}")
 	private int qtdPorPagina;
@@ -43,9 +50,49 @@ public class CompanyMongoDBController {
 	private UfCacheService ufCacheService;
 	
 	@Autowired
-	private CompanyServiceImpl companyService;
+	private CompanyService companyService;
 
 	
+	/**
+	 * Retorna a listagem de empresas.
+	 * 
+	 * @param cnpj
+	 * @return ResponseEntity<Response<LancamentoDto>>
+	 */
+	@GetMapping(value = "/listacnpj/{strCnpj}")
+	public ResponseEntity<Response<Page<CompanyDto>>> findForCompanyCnpj(
+			@PathVariable("strCnpj") String strCnpj,
+			@RequestParam(value = "pag", defaultValue = "0") int pag,
+			@RequestParam(value = "ord", defaultValue = "id") String ord,
+			@RequestParam(value = "dir", defaultValue = "DESC") String dir) {
+		log.info("Buscando empresas por ID do : {}, página: {}", strCnpj, pag);
+		Response<Page<CompanyDto>> response = new Response<Page<CompanyDto>>();
+
+		PageRequest pageRequest = new PageRequest(pag, this.qtdPorPagina, Direction.valueOf(dir), ord);
+		Page<Company> companies = this.companyService.findForCompanyCnpj(strCnpj, pageRequest);
+		Page<CompanyDto> companyDto = companies.map(company -> this.converterCompanyDto(company));
+
+		response.setData(companyDto);
+		return ResponseEntity.ok(response);
+	}
+
+	/**
+	 * Converte uma entidade lançamento para seu respectivo DTO.
+	 * 
+	 * @param lancamento
+	 * @return LancamentoDto
+	 */
+	private CompanyDto converterCompanyDto(Company company) {
+		CompanyDto companyDto = new CompanyDto();
+//		lancamentoDto.setId(Optional.of(lancamento.getId()));
+//		lancamentoDto.setData(this.dateFormat.format(lancamento.getData()));
+//		lancamentoDto.setTipo(lancamento.getTipo().toString());
+//		lancamentoDto.setDescricao(lancamento.getDescricao());
+//		lancamentoDto.setLocalizacao(lancamento.getLocalizacao());
+//		lancamentoDto.setFuncionarioId(lancamento.getFuncionario().getId());
+
+		return companyDto;
+	}
 	
 	@GetMapping(value = "/cnpj/{strCnpj}", headers = "X-API-Version=v1", produces=MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
