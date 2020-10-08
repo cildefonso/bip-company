@@ -37,17 +37,27 @@ addons:
         
        
 deploy:
-  #provider: codedeploy
-  provider: s3
-  access_key_id: $provider_id
-  secret_access_key: $provider_access
-  bucket: $s3bip
-  key: latest/bip-company-0.0.1-SNAPSHOT.jar
-  local_dir: "/home/travis/.m2/repository/com/bip/bip-company/0.0.1-SNAPSHOT"
-  bundle_type: jar
-  application: bip-company-0.0.1-SNAPSHOT
-  overwrite: true
-  skip_cleanup: true
+ - provider: s3
+   access_key_id: $provider_id
+   secret_access_key: $provider_access
+   bucket: $s3bip
+   key: latest/bip-company-0.0.1-SNAPSHOT.jar
+   local_dir: "/home/travis/.m2/repository/com/bip/bip-company/0.0.1-SNAPSHOT"
+   bundle_type: jar
+   application: bip-company-0.0.1-SNAPSHOT
+   overwrite: true
+   skip_cleanup: true
+   
+ - provider: codedeploy
+   access_key_id: $$provider_id
+   secret_access_key: $provider_access
+   bucket: $s3bip
+   key: latest/bip-company-0.0.1-SNAPSHOT.jar
+   bundle_type: jar
+   application: $application
+   deployment_group: $group
+   region: $region
+   
 # glob: "bip-company-0.0.1-SNAPSHOT.jar"
 # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
 # upload_dir: target
