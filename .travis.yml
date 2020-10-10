@@ -48,16 +48,21 @@ deploy:
    overwrite: true
    skip_cleanup: true
    
- - provider: codedeploy
-   access_key_id: $$provider_id
-   secret_access_key: $provider_access
-   bucket: $s3bip
-   key: latest/bip-company-0.0.1-SNAPSHOT.jar
-   bundle_type: jar
-   application: $application
-   deployment_group: $group
-   region: $region
+# - provider: codedeploy
+#   access_key_id: $$provider_id
+#   secret_access_key: $provider_access
+#   bucket: $s3bip
+#   key: latest/bip-company-0.0.1-SNAPSHOT.jar
+#   bundle_type: jar
+#   application: $application
+#   deployment_group: $group
+#   region: $region
    
+   script:
+      - aws s3 cp s3://$s3bip/bip-company-0.0.1-SNAPSHOT.jar /home/ec2-user/jar/my_copied_file.ext
+#     - zip -r latest *
+#     - mkdir -p dpl_cd_upload
+#     - mv latest.zip dpl_cd_upload/latest.zip
    
 # glob: "bip-company-0.0.1-SNAPSHOT.jar"
 # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
@@ -66,8 +71,10 @@ deploy:
 # region: us-east-1
 #https://medium.com/@itsdavidthai/comprehensive-aws-ec2-deployment-with-travisci-guide-7cafa9c754fc
  
-   
 notifications:
   email:
     - cildefonso@gmail.com, deleon.simoni@gmail.com
+    
+    
+
  
