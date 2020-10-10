@@ -48,15 +48,16 @@ deploy:
    overwrite: true
    skip_cleanup: true
    
- - provider: codedeploy
-   access_key_id: $$provider_id
-   secret_access_key: $provider_access
-   bucket: $s3bip
-   key: latest/bip-company-0.0.1-SNAPSHOT.jar
-   bundle_type: jar
-   application: $application
-   deployment_group: $group
-   region: $region
+# - provider: codedeploy
+#   access_key_id: $$provider_id
+#   secret_access_key: $provider_access
+#   bucket: $s3bip
+#   key: latest/bip-company-0.0.1-SNAPSHOT.jar
+#   bundle_type: jar
+#   application: $application
+#   deployment_group: $group
+#   region: $region
+   
    
 # glob: "bip-company-0.0.1-SNAPSHOT.jar"
 # upload-dir: "/home/travis/build/cildefonso/bip-company/target/" 
@@ -68,6 +69,5 @@ deploy:
    
 notifications:
   email:
-    - cildefonso@gmail.com
-    #, deleon.simoni@gmail.com
+    - cildefonso@gmail.com, deleon.simoni@gmail.com
  
