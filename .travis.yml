@@ -59,8 +59,8 @@ deploy:
 #   region: $region
 
    
-#   script:
-#      - aws s3 cp s3://$s3bip/bip-company-0.0.1-SNAPSHOT.jar /home/ec2-user/jar/my_copied_file.ext
+   script:
+      - aws s3 cp s3://bipbinary/bip-company-0.0.1-SNAPSHOT.jar /home/ec2-user/jar/bip-company-0.0.1-SNAPSHOT.jar
 #     - zip -r latest *
 #     - mkdir -p dpl_cd_upload
 #     - mv latest.zip dpl_cd_upload/latest.zip
