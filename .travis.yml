@@ -57,7 +57,6 @@ deploy:
 #   application: $application
 #   deployment_group: $group
 #   region: $region
-
    
    script:
       - aws s3 cp s3://bipbinary/bip-company-0.0.1-SNAPSHOT.jar /home/ec2-user/jar/bip-company-0.0.1-SNAPSHOT.jar
